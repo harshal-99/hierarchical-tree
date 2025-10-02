@@ -1,0 +1,22 @@
+@if (node) {
+  <ul class="tree">
+    <li>
+    <span class="label">
+      @if (!isRoot) {
+        <span>- </span>
+      }
+      {{ node.name }}
+    </span>
+      @if (node.children.length > 0) {
+        <ul style="padding-left: {{node.depth > 0 ? '1.5rem' : '0'}}">
+          @for (child of node.children; track child.name) {
+            <li>
+              <app-tree [node]="child"></app-tree>
+            </li>
+          }
+        </ul>
+      }
+    </li>
+  </ul>
+
+}
