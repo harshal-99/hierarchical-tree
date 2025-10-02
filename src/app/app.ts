@@ -30,10 +30,15 @@ export class App implements OnInit {
     for (const k of Object.keys(map)) {
       for (const c of map[k]) childrenKeys.add(c);
     }
+    let rootKey: string | undefined;
     for (const k of parentKeys) {
-      if (!childrenKeys.has(k)) return k;
+      if (!childrenKeys.has(k)) {
+        if (rootKey) throw new Error('Invalid tree: Multiple roots found');
+        rootKey = k;
+      }
     }
-    throw new Error('No root key found');
+    if (!rootKey) throw new Error('Invalid tree: No root found');
+    return rootKey;
   }
 
   private buildTree(name: string, map: TreeMap, depth: number): TreeNode {
