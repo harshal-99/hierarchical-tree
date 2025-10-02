@@ -25,13 +25,13 @@ export class App implements OnInit {
   }
 
   private findRootKey(map: TreeMap): string {
-    const keys = new Set(Object.keys(map));
-    const children = new Set<string>();
+    const parentKeys = new Set(Object.keys(map));
+    const childrenKeys = new Set<string>();
     for (const k of Object.keys(map)) {
-      for (const c of map[k]) children.add(c);
+      for (const c of map[k]) childrenKeys.add(c);
     }
-    for (const k of keys) {
-      if (!children.has(k)) return k;
+    for (const k of parentKeys) {
+      if (!childrenKeys.has(k)) return k;
     }
     throw new Error('No root key found');
   }
